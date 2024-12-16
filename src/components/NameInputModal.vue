@@ -1,25 +1,34 @@
 <template>
-  <div v-if="show" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 w-[90%] max-w-md text-center">
-      <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Game Over!</h2>
-      <p class="text-xl text-gray-700 dark:text-gray-300 mb-6">Your Score: {{ score }}</p>
-      <div class="text-left mb-6">
-        <label 
+  <div
+    v-if="show"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+  >
+    <div
+      class="bg-white dark:bg-gray-800 rounded-2xl p-6 w-[90%] max-w-md text-center"
+    >
+      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
+        Game Over!
+      </h2>
+      <p class="mb-6 text-xl text-gray-700 dark:text-gray-300">
+        Your Score: {{ score }}
+      </p>
+      <div class="mb-6 text-left">
+        <label
           for="playerName"
-          class="block text-gray-700 dark:text-gray-300 mb-2 font-medium"
+          class="block mb-2 font-medium text-gray-700 dark:text-gray-300"
         >
           Enter your name:
         </label>
-        <input 
+        <input
           id="playerName"
           v-model="playerName"
           type="text"
           placeholder="Your name"
           @keyup.enter="submit"
-          class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
-        >
+          class="w-full px-3 py-2 text-gray-900 bg-white border border-gray-300 rounded-lg outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent"
+        />
       </div>
-      <button 
+      <button
         class="game-button"
         @click="submit"
         :disabled="!playerName.trim()"
@@ -31,24 +40,25 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from "vue";
 
 interface Props {
   show: boolean;
   score: number;
 }
 
-const props = defineProps<Props>();
+defineProps<Props>();
+
 const emit = defineEmits<{
-  (e: 'submit', name: string): void;
+  (e: "submit", name: string): void;
 }>();
 
-const playerName = ref('');
+const playerName = ref("");
 
 const submit = () => {
   if (playerName.value.trim()) {
-    emit('submit', playerName.value.trim());
-    playerName.value = '';
+    emit("submit", playerName.value.trim());
+    playerName.value = "";
   }
 };
 </script>
@@ -127,4 +137,4 @@ input {
   background: var(--button-disabled);
   cursor: not-allowed;
 }
-</style> 
+</style>
